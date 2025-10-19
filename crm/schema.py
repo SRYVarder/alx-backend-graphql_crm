@@ -47,7 +47,7 @@ class CreateCustomer(graphene.Mutation):
         input = CustomerInput(required=True)
     customer = graphene.Field(lambda: CustomerNode)
     message = graphene.String()
-    errors = graphene.List(graphene.String)
+    errors = graphene.List(graphene.String, CustomerType)
     @staticmethod
     def mutate(root, info, input):
         # validate email unique, phone format
