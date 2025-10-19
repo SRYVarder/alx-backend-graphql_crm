@@ -1,4 +1,5 @@
 import graphene
+from .types import CustomerType
 from graphene_django import DjangoObjectType
 from graphene import relay
 from django.db import transaction
@@ -155,3 +156,10 @@ class Mutation(graphene.ObjectType):
     bulk_create_customers = BulkCreateCustomers.Field()
     create_product = CreateProduct.Field()
     create_order = CreateOrder.Field()
+
+
+class Query(graphene.ObjectType):
+    all_customers = graphene.List(CustomerType)
+
+    def resolve_all_customers(root, info):
+        return Customer.objects.all()
