@@ -160,6 +160,7 @@ class Mutation(graphene.ObjectType):
 
 class Query(graphene.ObjectType):
     all_customers = graphene.List(CustomerType)
+    customer = graphene.Field(CustomerType)
 
     def resolve_all_customers(root, info):
         return Customer.objects.all()
