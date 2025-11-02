@@ -17,3 +17,22 @@ Minimal Django + Graphene project for the "Understanding GraphQL" assignment.
 - The schema exposes `hello` query and Relay-style connection fields `allCustomers`, `allProducts`, `allOrders` with django-filter support.
 - Mutations implemented: createCustomer, bulkCreateCustomers, createProduct, createOrder.
 - Filters: see crm/filters.py
+
+- # CRM Celery Report Task
+
+## Overview
+This module sets up a Celery task and Celery Beat scheduler to automatically generate weekly CRM reports that summarize:
+- Total number of customers
+- Total number of orders
+- Total revenue
+
+Reports are logged to `/tmp/crm_report_log.txt`.
+
+---
+
+## Setup Instructions
+
+### 1. Install Dependencies
+```bash
+pip install -r requirements.txt
+
