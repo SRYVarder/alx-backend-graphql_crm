@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import requests
 from datetime import datetime, timedelta
+from gql import gql, Client
 
 endpoint = "http://localhost:8000/graphql"
 query = f"""
