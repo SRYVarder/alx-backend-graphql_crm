@@ -17,6 +17,7 @@ INSTALLED_APPS = [
     # GraphQL and app
     "graphene_django",
     "crm",
+    "django_crontab",
 ]
 
 MIDDLEWARE = [
@@ -28,6 +29,12 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+CRONJOBS = [
+    ('*/5 * * * *', 'crm.cron.log_crm_heartbeat'),
+    ('0 */12 * * *', 'crm.cron.update_low_stock'),
+]
+
 
 ROOT_URLCONF = "alx_backend_graphql.urls"
 
