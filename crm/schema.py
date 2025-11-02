@@ -7,6 +7,8 @@ from .models import Customer, Product, Order, OrderItem
 from .filters import CustomerFilter, ProductFilter, OrderFilter
 from graphene_django.filter import DjangoFilterConnectionField
 import re, datetime, decimal
+from crm.models import Product
+
 class CustomerNode(DjangoObjectType):
     class Meta:
         model = Customer
@@ -164,3 +166,20 @@ class Query(graphene.ObjectType):
 
     def resolve_all_customers(root, info):
         return Customer.objects.all()
+
+class UpdateLowStockProducts(graphene.Mutation):
+    success = graphene.Boolean()
+    updated_products = graphene.List(graphene.String)
+
+    def mutate(self, info):
+        updated = []
+        for product in Product.objects.filter(stock__lt=10):
+            product.stock += 10
+            product.save()
+            updated.append(f"{product.name} -> {product.stock}")
+        return UpdateLowStockProducts(success=True, updated_products=updated)
+
+class Mutation(graphene.ObjectType):
+    update_low_stock_products = UpdateLowStockProducts.Field()
+
+
